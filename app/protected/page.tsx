@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 
 export default async function ProtectedPage() {
   const supabase = createClient();
+  let currentPerms : string = 'None';
 
   const {
     data: { user },
@@ -15,6 +16,8 @@ export default async function ProtectedPage() {
   if (!user) {
     return redirect("/login");
   }
+
+  currentPerms = user.role as string;
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
